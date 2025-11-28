@@ -4,5 +4,8 @@
   },
   "index.qmd": {
     "index.html": "6401c571"
+  },
+  "notebooks/test.ipynb": {
+    "test.html": "2a4599b0"
   }
 }

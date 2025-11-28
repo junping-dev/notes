@@ -1,10 +1,38 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "笔记",
+    "objectID": "notebooks/test.html",
+    "href": "notebooks/test.html",
+    "title": "网站使用方法",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "---\ntitle: \"网站使用方法\"\nformat:\n  html:\n    toc: true\n---\n在 Notebook 第一格写一个简单标题\n上面这个代码叫 YAML 头部，Quarto 会用它当页面标题、是否显示目录等。\n很好 👍，既然已经能打开 https://junping-dev.github.io/notes/，接下来就进入「日常使用工作流」阶段了： 以后你只要按一套固定流程，就能把新的笔记加进去。\n下面我按三个问题讲："
+  },
+  {
+    "objectID": "notebooks/test.html#一仓库结构怎么管理",
+    "href": "notebooks/test.html#一仓库结构怎么管理",
+    "title": "网站使用方法",
+    "section": "一、仓库结构怎么管理？",
+    "text": "一、仓库结构怎么管理？\n假设你本地的仓库路径是：\nC:\\Users\\32840\\Desktop\\notes   # 示例\n典型结构可以是这样（你可以稍微调整，但建议类似）：\nnotes/\n├── _quarto.yml        # 网站全局配置 & 导航\n├── index.qmd          # 首页\n├── about.qmd          # 关于（可删）\n├── notebooks/         # 以后所有笔记都丢这里\n│   ├── cross_entropy.ipynb\n│   ├── batchnorm_layernorm.ipynb\n│   └── binary_search.ipynb\n├── .nojekyll\n└── docs/              # quarto render 后自动生成，给 GitHub Pages 用\n    ├── index.html\n    └── ...\n\n原则：\n\nnotebooks/ 下面随便分子目录，比如 dl/、algo/，都可以；\n_quarto.yml 是“目录总控”，你每加一篇新笔记，只要在这里挂一下链接。"
+  },
+  {
+    "objectID": "notebooks/test.html#二有了新笔记怎么加到网站里",
+    "href": "notebooks/test.html#二有了新笔记怎么加到网站里",
+    "title": "网站使用方法",
+    "section": "二、有了新笔记，怎么加到网站里？",
+    "text": "二、有了新笔记，怎么加到网站里？\n分两种情况：你写的是 Jupyter Notebook .ipynb 还是 Quarto 文档 .qmd。你现在习惯是 Notebook，为你重点讲这个。\n\n1. 把新的笔记文件放进仓库\n例如你刚在 VSCode 里写完一个：\n交叉熵与分类.ipynb\n先保存好，然后复制 / 移动到仓库里的 notebooks/ 目录：\nnotes/\n  notebooks/\n    cross_entropy.ipynb\n（建议用英文文件名，避免以后路径问题。）\n\n如果你想按主题分目录，也可以：\nnotebooks/\n  dl/\n    cross_entropy.ipynb\n\n\n\n2. 在 Notebook 第一格写一个简单标题（可选但推荐）\n在 cross_entropy.ipynb 的第一个 Markdown 单元里写：\n---\ntitle: \"交叉熵与分类任务\"\nformat:\n  html:\n    toc: true\n---\n\n# 交叉熵与分类任务\n前面这段 --- ... --- 叫 YAML 头部，Quarto 会用它当页面标题、是否显示目录等。\n\n偷懒版： 这一步其实可以不写，Quarto 会用文件名当标题，只是页面名字会丑一点而已。\n\n\n\n3. 在 _quarto.yml 里把笔记挂到导航栏\n打开仓库根目录的 _quarto.yml，大概是这样的：\nproject:\n  type: website\n  output-dir: docs\n\nwebsite:\n  title: \"My Notes\"\n  navbar:\n    left:\n      - href: index.qmd\n        text: Home\n\nformat:\n  html:\n    theme: cosmo\n    toc: true\n现在假设你要在导航栏加一个「Deep Learning」菜单，把这篇 notebook 放进来：\n情形 A：笔记在 notebooks/ 下面\nwebsite:\n  title: \"My Notes\"\n  navbar:\n    left:\n      - href: index.qmd\n        text: Home\n      - text: Deep Learning\n        menu:\n          - text: 交叉熵与分类\n            href: notebooks/cross_entropy.ipynb\n情形 B：你按子目录分，比如 notebooks/dl/cross_entropy.ipynb\nwebsite:\n  title: \"My Notes\"\n  navbar:\n    left:\n      - href: index.qmd\n        text: Home\n      - text: Deep Learning\n        menu:\n          - text: 交叉熵与分类\n            href: notebooks/dl/cross_entropy.ipynb\n\n注意：\n\nhref 写的是相对路径，可以直接指向 .ipynb；\ntext 是导航栏显示的中文标题。\n\n\n\n\n4. 本地预览确认一下\n在仓库目录里打开终端（或 VSCode 终端）：\ncd C:\\Users\\32840\\Desktop\\notes\nquarto preview\n浏览器会打开本地预览：\n\n顶部导航栏应该能看到「Deep Learning」→「交叉熵与分类」；\n点进去能看到你 notebook 里的代码、输出、公式。\n\n没问题之后就可以正式发布。"
+  },
+  {
+    "objectID": "notebooks/test.html#三每次更新后的-git-工作流固定-4-步",
+    "href": "notebooks/test.html#三每次更新后的-git-工作流固定-4-步",
+    "title": "网站使用方法",
+    "section": "三、每次更新后的 Git 工作流（固定 4 步）",
+    "text": "三、每次更新后的 Git 工作流（固定 4 步）\n以后你只要记住这 4 步就行：\n\n渲染网站（生成最新 docs）\nquarto render\n查看变更\ngit status\n一般会看到：\n\n新增的 notebooks/xxx.ipynb\n更新后的 docs/ 里的 html\n\n提交到 Git\ngit add .\ngit commit -m \"add note: cross entropy\"\n推送到 GitHub\ngit push\n\nGitHub Pages 会自动用最新的 docs/ 更新，几十秒 ~ 几分钟后访问：\nhttps://junping-dev.github.io/notes/\n就能看到新加的那篇笔记了。"
+  },
+  {
+    "objectID": "notebooks/test.html#四给你一个以后每加一篇笔记的-checklist",
+    "href": "notebooks/test.html#四给你一个以后每加一篇笔记的-checklist",
+    "title": "网站使用方法",
+    "section": "四、给你一个“以后每加一篇笔记”的 Checklist",
+    "text": "四、给你一个“以后每加一篇笔记”的 Checklist\n以后你可以照着这个小清单做（基本 5～10 分钟）：\n\n在 VSCode 里写完一个 Notebook，保存为： cross_entropy.ipynb\n把文件复制到仓库的 notebooks/（或子目录）里；\n在 Notebook 第一格写上标题（可选）；\n修改 _quarto.yml，在 navbar 里加一个链接；\n终端里运行：\nquarto render\ngit add .\ngit commit -m \"add note: cross entropy\"\ngit push\n\nOK，这一篇就“接”到你的在线笔记站上了。\n\n如果你愿意，可以把你现在的 _quarto.yml 内容贴出来，我可以帮你直接改成一个适合「深度学习 + 算法」的导航结构，你只需要后面往 notebooks/ 里丢文件、复制一行配置就能新增页面。"
   },
   {
     "objectID": "about.html",
@@ -12,5 +40,12 @@
     "title": "About",
     "section": "",
     "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "笔记",
+    "section": "",
+    "text": "这是一个笔记仓库，用于记录我学习的内容。 This repository contains notes on various topics that I have learned."
   }
 ]

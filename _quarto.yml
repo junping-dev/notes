@@ -1,14 +1,18 @@
 project:
   type: website
   output-dir: docs 
-  
+
 website:
   title: "我的笔记"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+
+      - text: 笔记
+        menu:
+          - text: 测试网站和网站用法
+            href: notebooks/test.ipynb
 
 format:
   html:
