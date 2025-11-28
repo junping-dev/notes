@@ -7,12 +7,18 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
-
-      - text: 笔记
+        text: 主页
         menu:
-          - text: 测试网站和网站用法
-            href: notebooks/test.ipynb
+          - text: 网站使用笔记
+            menu:
+              - text: 测试网站和网站用法
+                href: notebooks/test.ipynb
+          
+          - text: 深度学习
+            menu:
+              - text: PyTorch 基础
+                href: deep-learning/PyTorch.ipynb
+                
 
 format:
   html:
